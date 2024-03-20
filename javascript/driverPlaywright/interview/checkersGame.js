@@ -1,4 +1,5 @@
 const BasePage = require("../basePage");
+const { expect } = require('@playwright/test');
 
 class CrownCastle extends BasePage {
   constructor(page) {
@@ -20,11 +21,13 @@ class CrownCastle extends BasePage {
     this.waiting = this.page.getByText("Please wait.");
     this.restarted = this.page.getByText("Select an orange piece to move.");
   }
-//navigate to checkers game
+
+  //navigate to checkers game
   async goToCheckers() {
     await this.navigate(this.checkersChallengeUrl);
     await this.restarted.waitFor({ state: "visible" });
   }
+
   // board is set up with cartesian coordinates 0,0 = bottom right
   async playCheckers() {
     await this.movePiece(this.selectPieceOne, this.moveOne);
@@ -33,40 +36,44 @@ class CrownCastle extends BasePage {
     await this.movePiece(this.selectPieceThree, this.selectPieceOne);
     await this.movePiece(this.selectPieceFour, this.lastMove);
   }
-//moves pieces by ensuring each piece is selected first, 
-//loops if not selected,
-//then selects next space
+
+  //moves pieces by ensuring each piece is selected first,
+  //loops if not selected,
+  //then selects next space
   async movePiece(firstPosition, secondPosition) {
-    let counter = 0;
     await this.waiting.waitFor({ state: "detached" });
     await this.doClick(firstPosition);
-    while (counter < 5) {
-        await this.page.waitForTimeout(500);
-        counter++;
-        if (await this.pieceSelected.isVisible()) {
-            await this.doClick(secondPosition);
-            break;
-        } else if (await this.waiting.isVisible()) {
-            console.log("Waiting element appeared, clicking first position again...");
-            await this.doClick(firstPosition);
-        } else {
-            console.log("Piece not selected yet.");
-        }
+
+    let counter = 0;
+    let pieceSelectedVisible = false;
+  
+    while (counter < 5 && !pieceSelectedVisible) {
+      await this.doClick(firstPosition);
+      await this.page.waitForTimeout(500);
+      pieceSelectedVisible = await this.pieceSelected.isVisible();
+      counter+= 1;
     }
+
     if (counter >= 5) {
-        console.log("Failed to select piece within 5 attempts.");
+      console.log("Failed to select piece within 5 attempts.");
     }
+    await this.doClick(secondPosition)
+
     await this.computersMove.waitFor({ state: "detached" });
     await this.makeMove.waitFor({ state: "visible" });
-}
-//this function ensures that the correct number of blue pieces are on the board
-//both after a piece has been taken and after the board has been reset
-  async evaluateResults() {
-    await this.page.waitForTimeout(3000);
+  }
+
+  //this function ensures that the correct number of blue pieces are on the board
+  //both after a piece has been taken and after the board has been reset
+  async evaluateResults(expectedCount) {
+    // Wait for the count of blue pieces to equal expectedCount
+    await expect(this.bluePieces).toHaveCount(expectedCount);
     const bluePieceCount = await this.bluePieces.count();
     return bluePieceCount;
   }
-//resets the game
+  
+
+  //resets the game
   async restartBoard() {
     await this.doClick(this.restart);
     await this.restarted.waitFor({ state: "visible" });
