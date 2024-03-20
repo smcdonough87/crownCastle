@@ -36,17 +36,31 @@ class CrownCastle extends BasePage {
   }
 
   async movePiece(firstPosition, secondPosition) {
+    let counter = 0;
     await this.waiting.waitFor({ state: "detached" });
     await this.doClick(firstPosition);
-    await this.pieceSelected.waitFor({ state: "visible" });
-    await this.doClick(secondPosition);
+    while (counter < 5) {
+        await this.page.waitForTimeout(500);
+        counter++;
+        if (await this.pieceSelected.isVisible()) {
+            await this.doClick(secondPosition);
+            break;
+        } else if (await this.waiting.isVisible()) {
+            console.log("Waiting element appeared, clicking first position again...");
+            await this.doClick(firstPosition);
+        } else {
+            console.log("Piece not selected yet.");
+        }
+    }
+    if (counter >= 5) {
+        console.log("Failed to select piece within 5 attempts.");
+    }
     await this.computersMove.waitFor({ state: "detached" });
     await this.makeMove.waitFor({ state: "visible" });
-  }
+}
 
   async evaluateResults() {
-    await this.computersMove.waitFor({ state: "detached" });
-    await this.doClick(this.selectPieceOne); //used in place of sleep
+    await this.page.waitForTimeout(3000);
     const bluePieceCount = await this.bluePieces.count();
     return bluePieceCount;
   }

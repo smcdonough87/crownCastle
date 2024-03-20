@@ -24,7 +24,7 @@ Before({ tags: "@playwright" }, async function (scenario) {
 
   this.browser = await playwright.chromium.launch({
     headless: false,
-    slowMo: 1000,
+    slowMo: 200,
   });
   this.context = await this.browser.newContext({
     defaultNavigationTimeout: 30000,
