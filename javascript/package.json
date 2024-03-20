@@ -1,0 +1,29 @@
+{
+  "name": "javascript",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "type": "commonjs",
+  "scripts": {
+    "selenium-test": "cucumber-js --config testCucumber/config/config.js -p default -t @selenium",
+    "playwright-test": "cucumber-js --config testCucumber/config/config.js -p default -t @playwright",
+    "parallel-test": "cucumber-js --config testCucumber/config/config.js -p default --parallel 2",
+    "test": "cucumber-js --config testCucumber/config/config.js -p default -t",
+    "crownCastleCheckers": "cucumber-js --config testCucumber/config/config.js -p default -t @crownCastleChallengeOne",
+    "crownCastleCards": "cucumber-js --config testCucumber/config/config.js -p default -t @crownCastleChallengeTwo",
+    "crownCastle": "cucumber-js --config testCucumber/config/config.js -p default -t @challenge --parallel 2"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@cucumber/cucumber": "^10.3.1",
+    "chai": "^4.3.4",
+    "cucumber-html-reporter": "^7.1.1",
+    "fetch": "^1.1.0",
+    "ndjson": "^2.0.0",
+    "node-fetch": "^2.7.0",
+    "playwright": "^1.41.2",
+    "selenium-webdriver": "^4.17.0"
+  }
+}
