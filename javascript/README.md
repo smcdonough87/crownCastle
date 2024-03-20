@@ -12,7 +12,7 @@
 2. ```npm install```
 3. ```npm install node-fetch@2```
 
-## Running tests (Crown Castle)
+## Running the tests
 1. look at package.json scripts
 2. ```npm run crownCastleCheckers``` to run the checkers script
 3. ```npm run crownCastleCards``` to run the cards script
