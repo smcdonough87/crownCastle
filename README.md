@@ -12,7 +12,6 @@
 ## Setup 
 1. ```nvm use```
 2. ```npm install```
-3. ```npm install node-fetch@2```
 
 ## Running the tests
 1. look at package.json scripts
