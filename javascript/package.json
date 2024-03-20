@@ -9,9 +9,9 @@
     "playwright-test": "cucumber-js --config testCucumber/config/config.js -p default -t @playwright",
     "parallel-test": "cucumber-js --config testCucumber/config/config.js -p default --parallel 2",
     "test": "cucumber-js --config testCucumber/config/config.js -p default -t",
-    "crownCastleCheckers": "cucumber-js --config testCucumber/config/config.js -p default -t @crownCastleChallengeOne",
-    "crownCastleCards": "cucumber-js --config testCucumber/config/config.js -p default -t @crownCastleChallengeTwo",
-    "crownCastle": "cucumber-js --config testCucumber/config/config.js -p default -t @challenge --parallel 2"
+    "checkers": "cucumber-js --config testCucumber/config/config.js -p default -t @crownCastleChallengeOne",
+    "cards": "cucumber-js --config testCucumber/config/config.js -p default -t @crownCastleChallengeTwo",
+    "cardsAndCheckers": "cucumber-js --config testCucumber/config/config.js -p default -t @challenge --parallel 2"
   },
   "keywords": [],
   "author": "",
