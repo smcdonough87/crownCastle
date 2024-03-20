@@ -1,6 +1,6 @@
 const { Given, When, Then } = require("@cucumber/cucumber");
 const { assert } = require("chai");
-const CrownCastle = require("../../driverPlaywright/interview/challengeOnePage");
+const CrownCastle = require("../../driverPlaywright/interview/checkersGame");
 
 Given("I navigate to the checkers challenge", async function () {
   const crownCastle = new CrownCastle(this.page);

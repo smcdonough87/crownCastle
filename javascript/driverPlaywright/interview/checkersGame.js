@@ -5,7 +5,6 @@ class CrownCastle extends BasePage {
     super(page);
     this.checkersChallengeUrl =
       "https://www.gamesforthebrain.com/game/checkers/";
-    //this.contentLoaded = this.page.locator('[id="board"]')
     this.selectPieceOne = this.page.locator('[name="space42"]').first();
     this.moveOne = this.page.locator('[name="space33"]');
     this.moveTwo = this.page.locator('[name="space24"]');
