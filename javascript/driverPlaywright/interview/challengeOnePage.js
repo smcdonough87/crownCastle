@@ -21,7 +21,7 @@ class CrownCastle extends BasePage {
     this.waiting = this.page.getByText("Please wait.");
     this.restarted = this.page.getByText("Select an orange piece to move.");
   }
-
+//navigate to checkers game
   async goToCheckers() {
     await this.navigate(this.checkersChallengeUrl);
     await this.restarted.waitFor({ state: "visible" });
@@ -34,7 +34,9 @@ class CrownCastle extends BasePage {
     await this.movePiece(this.selectPieceThree, this.selectPieceOne);
     await this.movePiece(this.selectPieceFour, this.lastMove);
   }
-
+//moves pieces by ensuring each piece is selected first, 
+//loops if not selected,
+//then selects next space
   async movePiece(firstPosition, secondPosition) {
     let counter = 0;
     await this.waiting.waitFor({ state: "detached" });
@@ -58,13 +60,14 @@ class CrownCastle extends BasePage {
     await this.computersMove.waitFor({ state: "detached" });
     await this.makeMove.waitFor({ state: "visible" });
 }
-
+//this function ensures that the correct number of blue pieces are on the board
+//both after a piece has been taken and after the board has been reset
   async evaluateResults() {
     await this.page.waitForTimeout(3000);
     const bluePieceCount = await this.bluePieces.count();
     return bluePieceCount;
   }
-
+//resets the game
   async restartBoard() {
     await this.doClick(this.restart);
     await this.restarted.waitFor({ state: "visible" });
